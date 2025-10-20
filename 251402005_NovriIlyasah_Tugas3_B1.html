@@ -132,19 +132,31 @@
     }
     // ==================== SISTEM PEMBACA KOM ====================
     function cekKOM() {
-      const nim = prompt("Masukkan NIM Mahasiswa TI (NIM belakang, cth:005):");
-      if (!nim) {
-        alert("NIM tidak boleh kosong!");
-      } else if (nim.startsWith("004")) {
-        alert("NIM " + nim + " berada di KOM A");
-      } else if (nim.startsWith("005")) {
-        alert("NIM " + nim + " berada di KOM B");
-      } else if (nim.startsWith("006")) {
-        alert("NIM " + nim + " berada di KOM C");
-      } else {
-        alert("NIM " + nim + " tidak terdaftar di Prodi TI");
-      }
-    }
+      const nimAkhir = prompt("Masukkan NIM Mahasiswa TI (NIM belakang, cth:005):");
+
+      if (!nimAkhir) {
+         alert("NIM tidak boleh kosong!");
+         return;
+  }
+
+      // Daftar NIM perKOM
+      const komA = ["001", "004", "007", "0010", "0013", "0016", "0019", "0022", "0026", "0030", "0033", "0037", "0040", "0043", "0046"];
+      const komB = ["005", "008", "0011", "0014", "0017", "0020", "0023", "0027", "0031", "0034", "0038", "0041", "0044", "0047", "0050"];
+      const komC = ["003", "006", "009", "0012", "0015", "0018", "0021", "0024", "0028", "0032", "0035", "0039", "0042", "0045", "0048"];
+     
+      if (komA.some(suffix => nimAkhir.endsWith(suffix))) {
+       alert(`NIM belakang ${nimAkhir} berada di KOM A`);
+        } 
+         else if (komB.some(suffix => nimAkhir.endsWith(suffix))) {
+       alert(`NIM belakang ${nimAkhir} berada di KOM B`);
+        } 
+         else if (komC.some(suffix => nimAkhir.endsWith(suffix))) {
+           alert(`NIM belakang ${nimAkhir} berada di KOM C`);
+           } 
+            else {
+           alert(`NIM belakang ${nimAkhir} tidak terdaftar di Prodi TI`);
+               }
+}
   </script>
 </body>
 </html>
