@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo Proses Javascript</title>
+  <style>
+    /* Khusus tombol di popup form */
+
+    .close-btn {
+      background-color: white;
+      color: black;
+      display: block;
+      width: 100%;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .close-btn:hover {
+      background-color: #f9374a;
+      color: white;
+    }
+    .close-btn:active {
+      background-color: #ac1121;
+    }
+  </style>
+</head>
+<body id="body" style="font-family: Arial; margin:20px;">
+    <h2>Demo Proses Javascript</h2>
+
+  <!-- Tombol Mode Malam & Tambah Card -->
+  <button id="btnMode" onclick="toggleMode()">&#127769; Mode Malam</button>
+  <button onclick="tambahCard()">&#10133; Tambah Card</button>
+
+  <!-- Container Card -->
+  <div id="cardContainer" style="margin-top:20px; display:flex; flex-wrap:wrap;"></div>
+
+  <!-- Tombol Form & KOM -->
+  <div style="margin-top:20px;">
+    <button onclick="openPopup()">&#128203; Tampilkan Form</button>
+    <button onclick="cekKOM()">&#128269; Cari KOM Mahasiswa</button>
+  </div>
+
+  <!-- Popup Form -->
+  <div id="popup"style="display:none; position:fixed; top:30%; left:50%; transform: translateX(-50%); background:#f0f0f0; padding:20px; border:1px solid black; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
+    <h3>Form Data</h3>
+    <input type="text" id="nama" placeholder="Nama" style="margin-bottom:10px;"><br>
+    <input type="email" id="email" placeholder="Email" style="margin-bottom:15px;"><br>
+    <button class="close-btn" onclick="closePopup()">Tutup</button>
+  </div>
+
+  <script>
+    // ==================== MODE MALAM / PAGI ====================
+    let malam = false;
+    function toggleMode() {
+      const body = document.getElementById("body");
+      const btn = document.getElementById("btnMode");
+      if (!malam) {
+        body.style.backgroundColor = "#1e1e1e";
+        body.style.color = "white";
+        btn.innerHTML = "&#127774; Mode Pagi";
+        btn.style.backgroundColor = "#333";
+        btn.style.color = "white";
+        malam = true;
+      } else {
+        body.style.backgroundColor = "white";
+        body.style.color = "black";
+        btn.innerHTML = "&#127769; Mode Malam";
+        btn.style.backgroundColor = "";
+        btn.style.color = "black";
+        malam = false;
+      }
+    }
+
+    // ==================== TAMBAH & HAPUS CARD ====================
+    let indexCard = 0;
+    function tambahCard() {
+      const container = document.getElementById("cardContainer");
+      const jumlahCard = container.children.length;
+
+      // Jika semua card dihapus, mulai ulang dari 1
+      if (jumlahCard === 0) {
+        indexCard = 0;
+      }
+      // Jika card sisa 1, mulai dari 2
+      if (jumlahCard === 1) {
+        indexCard = 1;
+      }
+
+      indexCard++;
+
+      const card = document.createElement("div");
+      card.style.border = "1px solid gray";
+      card.style.borderRadius = "10px";
+      card.style.width = "150px";
+      card.style.height = "100px";
+      card.style.margin = "10px";
+      card.style.position = "relative";
+      card.style.background = "white";
+      card.style.boxShadow = "2px 2px 5px rgba(0,0,0,0.2)";
+      card.style.display = "flex";
+      card.style.flexDirection = "column";
+      card.style.justifyContent = "center";
+      card.style.alignItems = "center";
+
+      card.innerHTML = `
+        <button onclick="hapusBelakang()" 
+                style="position:absolute; left:5px; top:5px; border:none; background:none; color:red; font-size:18px; cursor:pointer;">✖</button>
+        <div>
+          <h3>Card ${indexCard}</h3>
+          <p>Ini card ke-${indexCard}</p>
+        </div>
+      `;
+
+      container.appendChild(card);
+    }
+
+    function hapusBelakang() {
+      const container = document.getElementById("cardContainer");
+      const cards = container.children;
+      if (cards.length > 0) {
+        container.removeChild(container.lastElementChild);
+      }
+    }
+
+    // ==================== POPUP FORM ====================
+    function openPopup() {
+      document.getElementById("popup").style.display = "block";
+    }
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+    // ==================== SISTEM PEMBACA KOM ====================
+    function cekKOM() {
+      const nim = prompt("Masukkan NIM Mahasiswa TI (NIM belakang, cth:005):");
+      if (!nim) {
+        alert("NIM tidak boleh kosong!");
+      } else if (nim.startsWith("004")) {
+        alert("NIM " + nim + " berada di KOM A");
+      } else if (nim.startsWith("005")) {
+        alert("NIM " + nim + " berada di KOM B");
+      } else if (nim.startsWith("006")) {
+        alert("NIM " + nim + " berada di KOM C");
+      } else {
+        alert("NIM " + nim + " tidak terdaftar di Prodi TI");
+      }
+    }
+  </script>
+</body>
+</html>
